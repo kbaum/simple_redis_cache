@@ -10,21 +10,23 @@ class SimpleRedisCacheTest < Test::Unit::TestCase
     redis.flushdb
   end
 
-  # Called after every test method runs. Can be used to tear
-  # down fixture information.
 
-  def teardown
-    # Do nothing
+
+  def test_expire_block
+    cache('hello', :ttl=>1){ 'world' }
+    sleep(2)
+    assert_nil(redis['hello'])
   end
 
-  def test_cache_object
-    cache('hello', 'world')
-    assert_equal(get('hello'), 'world')
-  end
-
-  def test_cache_block
+  def test_cache
     cache('hello'){ 'world' }
-    assert_equal(get('hello'), 'world')
+    assert_equal(redis['hello'], 'world')
+  end
+
+  def test_block_is_only_executed_once
+    @index = 0
+    2.times{ cache('hello'){ @index+=1 } }
+    assert_equal(@index, 1)
   end
 
 

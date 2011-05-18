@@ -10,14 +10,11 @@ module SimpleRedisCache
     @redis ||= Redis.new
   end
 
-  def cache(*args, &block)
-    redis[args.first]=(block ? block.call : args.last)
+  def cache(key, opts={}, &block)
+    unless redis.exists(key)
+      redis[key]=block.call
+      redis.expire(key, opts[:ttl]) if opts[:ttl]
+    end
   end
-
-  def get(key)
-    redis[key]
-  end
-
-
 
 end

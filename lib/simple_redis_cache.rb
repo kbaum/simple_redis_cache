@@ -4,12 +4,9 @@ module SimpleRedisCache
 
   extend self
 
-  def redis=(redis)
-    @redis = redis
-  end
 
   def redis
-    @redis ||= Redis.new
+    Config.redis
   end
 
   def cache(key, opts={}, &block)
@@ -18,6 +15,17 @@ module SimpleRedisCache
       redis.expire(key, opts[:ttl]) if opts[:ttl]
     end
     value
+  end
+
+  module Config
+
+    def self.redis=(redis)
+      @redis = redis
+    end
+
+    def self.redis
+      @redis ||= Redis.new
+    end
   end
 
 end

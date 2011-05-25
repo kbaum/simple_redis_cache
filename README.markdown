@@ -16,7 +16,7 @@ Let's cache something for 1 minute
     end
 ```
 
-Call it as a method on the module.
+Call it straight from the module instead and this time cache it forever.
 
 ```ruby
     SimpleRedisCache.cache('hello') { 'world' }
@@ -30,5 +30,13 @@ Let's configure a different redis instance.
   SimpleRedisCache::Config.redis =  Redis.new(:host => "10.0.1.1", :port => 6380)
 ```
 
-Initial benchmarks indicate this is faster than whatever you're doing to cache.
+My benchmarks show this is faster than your current cache.
+
+
+But why would I use this?
+________________________
+
+Because you already depend on redis through _Resque_.
+
+
 

@@ -34,8 +34,7 @@ My benchmarks show this is faster than your current cache.
 
 
 But why would I use this?
-________________________
-
+------------------------
 Because you already depend on redis through _Resque_.
 
 

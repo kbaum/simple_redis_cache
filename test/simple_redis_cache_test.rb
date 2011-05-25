@@ -23,6 +23,10 @@ class SimpleRedisCacheTest < Test::Unit::TestCase
     assert_equal(redis['hello'], 'world')
   end
 
+  def test_cache_with_expire_block
+    assert_equal('world', cache('hello', :ttl=>1000){ 'world' })
+  end
+
   def test_block_is_only_executed_once
     @index = 0
     2.times{ cache('hello'){ @index+=1 } }

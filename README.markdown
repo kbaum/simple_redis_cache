@@ -16,6 +16,12 @@ Let's cache something for 1 minute
     end
 ```
 
+Call it as a method on the module.
+
+```ruby
+    SimpleRedisCache.cache('hello') { 'world' }
+```
+
 The above uses the default _Redis.new_ instance running on _127.0.0.1:6379_
 
 Let's configure a different redis instance.
@@ -24,8 +30,5 @@ Let's configure a different redis instance.
   SimpleRedisCache::Config.redis =  Redis.new(:host => "10.0.1.1", :port => 6380)
 ```
 
-Call it as a method on the module.
+Initial benchmarks indicate this is faster than whatever you're doing to cache.
 
-```ruby
-    SimpleRedisCache.cache('hello') { 'world' }
-```

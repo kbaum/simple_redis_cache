@@ -48,5 +48,11 @@ class SimpleRedisCacheTest < Test::Unit::TestCase
     assert_equal(redis['hello'], 'world')
   end
 
+  require 'json'
+  def test_cache_permutations
+    assert_equal( (0..20).to_a.permutation(3).to_a, JSON.parse(cache('20_perm_4'){ (0..20).to_a.permutation(3).to_a.to_json }) )
+  end
+
+
 
 end
